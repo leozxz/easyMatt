@@ -6,6 +6,11 @@ urlpatterns = [
     path('cadastroC/', views.cadastro),
     path('cadastroU/', views.cadastroU),
     path('cadastroF/', views.cadastroF),
-    path('cadastroP/', views.produtos),
+    path('cadastroP/', views.cadastroP),
     path('cadastroV/', views.cadastroV),
+    path('success/', views.success),
+    path('unsuccessC/', views.unsuccessC),
+    path('unsuccessF/', views.unsuccessF),
+    path('unsuccessU/', views.unsuccessU),
+    path('unsuccessV/', views.unsuccessV),
 ]

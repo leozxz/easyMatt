@@ -8,11 +8,26 @@ class Tb_estoque(models.Model):
     id_estoque = models.IntegerField(primary_key=True, verbose_name='Id estoque')
     id_produto = models.IntegerField(verbose_name='Id produto', null=True)
     ds_n = models.CharField(max_length=45, verbose_name='Nome')
-    ds_tamanho = models.CharField(max_length=2, verbose_name='Tamanho', null=True)
-    ds_cor = models.CharField(max_length=10, verbose_name='Cor', null=True)
+    tamanhoCHOICES = [
+        ('PP', 'PP'),
+        ('P', 'P'),
+        ('M', 'M'),
+        ('G', 'G'),
+        ('GG', 'GG'),
+    ]
+    ds_tamanho = models.CharField(max_length=2, verbose_name='Tamanho', null=True, choices= tamanhoCHOICES)
+    corCHOICES = [
+        ('Branco', 'Branco'),
+        ('Preto', 'Preto'),
+        ('Verde', 'Verde'),
+        ('Rosa', 'Rosa'),
+        ('Vermelho', 'Vermelho'),
+    ]
+    ds_cor = models.CharField(max_length=10, verbose_name='Cor', null=True, choices=corCHOICES)
     vl_preco_custo = models.DecimalField(decimal_places=2, max_digits=15, verbose_name='Custo',null=True)
     vl_preco_venda = models.DecimalField(decimal_places=2, max_digits=15, verbose_name='Preco de venda', null=True)
     dt_entrada = models.DateField(verbose_name='Data de entrada', null=True)
+
     class Meta:
         ordering = ('ds_n',)
         verbose_name = 'Estoque'
@@ -66,7 +81,14 @@ class Tb_fornecedor(models.Model):
     email = models.EmailField()
     telefone = PhoneField(blank=True, help_text='Contact phone number')
     codigo = models.IntegerField(verbose_name='Codigo do produto')
-    tipo = models.CharField(max_length=45, verbose_name='Tipo: Blusa / Saia / Calça')
+    proChoices = [
+        ('Blusa', 'Blusa'),
+        ('Saia', 'Saia'),
+        ('Calça', 'Calça'),
+        ('Moletom', 'Moletom'),
+        ('Bone', 'Bone'),
+    ]
+    tipo = models.CharField(max_length=45, verbose_name='Tipo', choices=proChoices)
 
     class Meta:
         ordering = ('nome',)

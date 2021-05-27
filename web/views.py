@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views.decorators.http import require_POST
 from .models import Tb_estoque
-from .forms import TbEstoqueForm, TbClienteForm, TbUsuarioForm, TbFornecedorForm, Car
+from .forms import TbClienteForm, TbUsuarioForm, TbFornecedorForm, Car, TbProdutoForm
 
 
 def home(request):
@@ -63,25 +63,15 @@ def cadastroF(request):
 def cadastroV(request):
     return render(request, 'account/cadastroV.html')
 
-@login_required(login_url='/login/')
-def produtos(request):
+def cadastroP(request):
     if request.method == 'POST':
-        form = TbEstoqueForm(request.POST)
+        form = TbProdutoForm(request.POST)
         if form.is_valid():
-            ds_n = form['ds_n'].value()
-            id_produto = form['id_produto'].value()
-            ds_tamanho = form['ds_tamanho'].value()
-            ds_cor = form['ds_cor'].value()
-            vl_preco_custo= form['vl_preco_custo'].value()
-            vl_preco_venda = form['vl_preco_venda'].value()
-            dt_entrada = form['dt_entrada'].value()
-
-
-            cadastroProduto = Tb_estoque(ds_n=ds_n, id_produto=id_produto,ds_tamanho=ds_tamanho, vl_preco_custo=vl_preco_custo, vl_preco_venda=vl_preco_venda, dt_entrada=dt_entrada, ds_cor=ds_cor)
-            cadastroProduto.save()
+            instance = form.save(commit=False)
+            instance.save()
+            return redirect('../success')
         else:
-            messages.error(request, 'Algo deu errado!')
-            return redirect('home')
+            return redirect('../unsuccessV')
     else:
-        cadastroProduto = Tb_estoque.objects.all()
-    return render(request, 'produtos/produto.html', {'cadastroProduto':cadastroProduto})
+        form = TbProdutoForm()
+    return render(request, 'produtos/produto.html', {'form': form})

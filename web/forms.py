@@ -1,14 +1,12 @@
 from django import forms
-from .models import Tb_cliente, Tb_usuario, Tb_fornecedor
+from .models import Tb_cliente, Tb_usuario, Tb_fornecedor, Tb_estoque
 
-class TbEstoqueForm(forms.Form):
-    ds_n = forms.CharField(max_length=45)
-    id_produto = forms.IntegerField()
-    ds_tamanho = forms.CharField(max_length=2)
-    ds_cor = forms.CharField(max_length=10)
-    vl_preco_custo = forms.DecimalField(max_digits=4, decimal_places=2)
-    vl_preco_venda = forms.DecimalField(max_digits=4, decimal_places=2)
-    dt_entrada = forms.DateField()
+
+class TbProdutoForm(forms.ModelForm):
+    class Meta:
+        model = Tb_estoque
+        required = False
+        fields = ('ds_n', 'id_produto', 'ds_tamanho', 'ds_cor', 'vl_preco_custo', 'vl_preco_venda', 'dt_entrada')
 
 class TbClienteForm(forms.ModelForm):
     class Meta:
